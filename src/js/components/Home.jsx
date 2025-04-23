@@ -1,28 +1,42 @@
-import React from "react";
-
-//include images into your bundle
+import React, { useEffect, useState } from "react";
 import rigoImage from "../../img/rigo-baby.jpg";
+import { Digit } from "./digit.jsx";
 
-//create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-            
+  const [timer, setTimer] = useState(0);
+  const [active, setActive] = useState(false);
 
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+  const toggleActive = () => {
+    setActive(prev => !prev);
+  };
+
+  useEffect(() => {
+    if (!active) return;
+
+    const interval = setInterval(() => {
+      setTimer(value => value + 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [active]);
+
+  return (
+    <main className="text-center">
+      <section className="counter-holder">
+        <Digit number={<span className="fa fa-clock"></span>} />
+        <Digit number={Math.floor(timer / 100000) % 10} />
+        <Digit number={Math.floor(timer / 10000) % 10} />
+        <Digit number={Math.floor(timer / 1000) % 10} />
+        <Digit number={Math.floor(timer / 100) % 10} />
+        <Digit number={Math.floor(timer / 10) % 10} />
+        <Digit number={timer % 10} />
+      </section>
+
+      <button className="toggle-btn" onClick={toggleActive}>
+        {active ? "Detener" : "Iniciar"}
+      </button>
+    </main>
+  );
 };
 
 export default Home;
