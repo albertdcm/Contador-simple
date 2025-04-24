@@ -1,5 +1,5 @@
 import React from "react";
-import { Digit } from "./Digit.jsx";
+import { Digit } from "./Digit.jsx"; 
 
 export const SecondsCounter = ({ seconds }) => {
   return (
